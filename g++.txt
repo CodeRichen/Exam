@@ -1,0 +1,12 @@
+g++ -o main .\main.cpp  
+./main
+g++ - c calc.cpp - o calc.o
+g++ - c main.cpp - o main.o
+g++ main.o calc.o - o main
+cl / c calc.cpp
+cl / c main.cpp
+link main.obj calc.obj / OUT:main.exe
+cl / c / EHsc book.cpp
+cl / c / EHsc grade.cpp
+link book.obj grade.obj / out : gb.exe
+g++ -o rpg .\BattleSystem.cpp .\Enemy.cpp .\main.cpp .\player.cpp .\save_load.cpp .\shop.cpp
