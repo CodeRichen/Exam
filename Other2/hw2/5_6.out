@@ -1,0 +1,33 @@
+traditional 2-dimensional array representation:
+
+Transpose time: 0.0004 ms
+0 0 1 1 0 0 
+0 2 0 0 0 0 
+4 0 3 0 0 0 
+0 0 0 0 0 0 
+0 0 0 0 0 0 
+becomes
+0 0 4 0 0 
+0 2 0 0 0 
+1 0 3 0 0 
+1 0 0 0 0 
+0 0 0 0 0 
+0 0 0 0 0 
+
+“Transpose” method in the textbook:
+
+Transpose time: 0.0005 ms
+(3, 0, 1) becomes (0, 3, 1) in the transpose
+(2, 0, 1) becomes (0, 2, 1) in the transpose
+(1, 1, 2) becomes (1, 1, 2) in the transpose
+(0, 2, 4) becomes (2, 0, 4) in the transpose
+(2, 2, 3) becomes (2, 2, 3) in the transpose
+
+“FastTranspose” method in the textbook:
+
+Transpose time: 0.0007 ms
+(0, 2, 4) becomes (2, 0, 4) in the transpose
+(1, 1, 2) becomes (1, 1, 2) in the transpose
+(2, 0, 1) becomes (0, 2, 1) in the transpose
+(2, 2, 3) becomes (2, 2, 3) in the transpose
+(3, 0, 1) becomes (0, 3, 1) in the transpose
