@@ -64,7 +64,7 @@ void Albumlist<M>::InsertAtAlbum(const M& A, int P) {
         temp = temp->next;
         i++;
     }
-    if (!temp->next) return; //阻止它自動添加到尾端
+    if (!temp->next && temp!=head) return; 
     Albumnode<M>* newAlbum = new Albumnode<M>(A);
     newAlbum->next = temp->next;
     temp->next = newAlbum;
@@ -103,7 +103,7 @@ void Albumlist<M>::RemoveAlbumAt(int P) {
         temp = temp->next;
         i++;
     }
-    if (!temp->next) return; //好像可以不用阻止它刪除nullptr...
+    // 好像可以不用阻止它刪除nullptr...
     Albumnode<M>* toDelete = temp->next;
     temp->next = toDelete->next;
     delete toDelete;
@@ -150,7 +150,7 @@ void Albumlist<M>::InsertTrack(const M& T, int C, const M& A, int P) {
         temp = temp->next;
         i++;
     }
-    if (!temp->next) return; 
+    if (!temp->next && temp!= album->tracks->head) return; 
     Tracknode<M>* newTrack = new Tracknode<M>(const_cast<M&>(T), C);
     newTrack->next = temp->next;
     temp->next = newTrack;
@@ -191,7 +191,7 @@ void Albumlist<M>::RemoveAtTrack(const M& A, int P) {
     Albumnode<M>* album = head;
     while (album && album->name != A) album = album->next;
     if (!album || !album->tracks->head) return;
-    if (P <= 0 || !album->tracks->head) {
+    if (P == 0 || !album->tracks->head) {
         PopTrack(A);
         return;
     }
@@ -201,7 +201,7 @@ void Albumlist<M>::RemoveAtTrack(const M& A, int P) {
         temp = temp->next; 
         i++;
     }
-    if (!temp->next) return;
+    if (!temp->next && temp != album->tracks->head) return;
     Tracknode<M>* toDelete = temp->next;
     temp->next = toDelete->next;
     delete toDelete;
@@ -250,15 +250,12 @@ void Albumlist<M>::Next() {
                return;
             }
             first=false;
-            // 有歌曲，刪除第一首歌
             Tracknode<M>* temp = trackHead;
             trackHead = trackHead->next;
             delete temp;
-            // 如果刪完還有歌就結束
             if (trackHead) return;
         }
 
-        // 沒有歌曲或剛刪完後沒歌 → 移除整張專輯
         Albumnode<M>* tempAlbum = head;
         head = head->next;
         delete tempAlbum;
@@ -303,7 +300,7 @@ Tracknode<M>* Albumlist<M>::MergeAllTracks() {
     while (album) {
         Tracknode<M>* track = album->tracks->head;
         while (track) {
-            Tracknode<M>* newNode = new Tracknode<M>(track->name, track->value);
+            Tracknode<M>* newNode = new Tracknode<M>(track->name, track->playCount);
             if (!mergedHead) {
                 mergedTail = newNode;
                 mergedHead = mergedTail;
@@ -344,7 +341,7 @@ Tracknode<M>* Albumlist<M>::Merge(Tracknode<M>* a, Tracknode<M>* b) {
     if (!b) return a;
 
     Tracknode<M>* result = nullptr;
-    if (a->value >= b->value) {
+    if (a->playCount >= b->playCount) {
         result = a;
         result->next = Merge(a->next, b);
     } else {
@@ -360,7 +357,7 @@ void Albumlist<M>::PrintSortedTracks() {
     
     cout <<"\n";
     while (sorted) {
-        cout << sorted->name << " " << sorted->value  <<"\n";
+        cout << sorted->name << " " << sorted->playCount  <<"\n";
         Tracknode<M>* temp = sorted;
         sorted = sorted->next;
         delete temp;  
