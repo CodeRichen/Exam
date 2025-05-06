@@ -61,6 +61,10 @@ public:
     void RemoveLastTrack(const M& A);
     void RemoveAtTrack(const M& A, int P);
     void PrintTrack(const M& A) const;
+    Tracknode<M>* MergeAllTracks();
+    Tracknode<M>* MergeSort(Tracknode<M>* head);   
+    Tracknode<M>* Merge(Tracknode<M>* a, Tracknode<M>* b); 
+    void PrintSortedTracks();  
 };
 
 #endif

@@ -17,8 +17,10 @@ int main() {
     string command;
 
     while (cin >> command) {
-        if (command == "END") break;
-
+        if (command == "END") {
+            playlist.PrintSortedTracks();
+            break;
+            }
         if (command == "PushFrontAlbum") {
             string A;
             cin >> A;

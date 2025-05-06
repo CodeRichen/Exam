@@ -293,3 +293,76 @@ void Albumlist<M>::ReverseAlbum() {
     }
     head = prev;
 }
+
+template <class M>
+Tracknode<M>* Albumlist<M>::MergeAllTracks() {
+    Tracknode<M>* mergedHead = nullptr;
+    Tracknode<M>* mergedTail = nullptr;
+
+    Albumnode<M>* album = head;
+    while (album) {
+        Tracknode<M>* track = album->tracks->head;
+        while (track) {
+            Tracknode<M>* newNode = new Tracknode<M>(track->name, track->value);
+            if (!mergedHead) {
+                mergedTail = newNode;
+                mergedHead = mergedTail;
+            } else {
+                mergedTail->next = newNode;
+                mergedTail = newNode;
+            }
+            track = track->next;
+        }
+        album = album->next;
+    }
+    return mergedHead;
+}
+
+template <class M>
+Tracknode<M>* Albumlist<M>::MergeSort(Tracknode<M>* head) {
+    if (!head || !head->next) return head;
+    Tracknode<M>* slow = head;
+    Tracknode<M>* fast = head->next;
+
+    while (fast && fast->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
+    Tracknode<M>* mid = slow->next;
+    slow->next = nullptr;
+
+    Tracknode<M>* left = MergeSort(head);
+    Tracknode<M>* right = MergeSort(mid);
+
+    return Merge(left, right);
+}
+
+template <class M>
+Tracknode<M>* Albumlist<M>::Merge(Tracknode<M>* a, Tracknode<M>* b) {
+    if (!a) return b;
+    if (!b) return a;
+
+    Tracknode<M>* result = nullptr;
+    if (a->value >= b->value) {
+        result = a;
+        result->next = Merge(a->next, b);
+    } else {
+        result = b;
+        result->next = Merge(a, b->next);
+    }
+    return result;
+}
+template <class M>
+void Albumlist<M>::PrintSortedTracks() {
+    Tracknode<M>* merged = MergeAllTracks();
+    Tracknode<M>* sorted = MergeSort(merged);
+    
+    cout <<"\n";
+    while (sorted) {
+        cout << sorted->name << " " << sorted->value  <<"\n";
+        Tracknode<M>* temp = sorted;
+        sorted = sorted->next;
+        delete temp;  
+    }
+}
