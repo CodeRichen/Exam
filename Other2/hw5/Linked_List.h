@@ -16,7 +16,7 @@ struct Tracknode {
 
 template <class M>
 class Tracklist {
-public:
+public: 
     Tracknode<M>* head;
     Tracklist() : head(nullptr) {}
     ~Tracklist();

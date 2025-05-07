@@ -8,6 +8,6 @@ def generate_data(entries=300):
     for _ in range(entries):
         rand_str = generate_random_string()
         rand_num = random.randint(0, 9999)
-        print(f"{rand_str} {rand_num}")
+        print(f"PushBackTrack {rand_str} {rand_num} A")
 
 generate_data()

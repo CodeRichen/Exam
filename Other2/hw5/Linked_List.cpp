@@ -278,6 +278,7 @@ void Albumlist<M>::ReverseTracks(const M& A) {
         curr = next;
     }
     album->tracks->head = prev;
+    
 }
 
 template <class M>
