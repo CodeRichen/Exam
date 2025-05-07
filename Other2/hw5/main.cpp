@@ -7,13 +7,6 @@ using namespace std;
 
 int main() {
     Albumlist<string> playlist;
-    // Tracklist<string> tracklist;
-    // Albumnode<string>* album = nullptr;
-    // Tracknode<string>* track = nullptr;
-    // string albumName;
-    // string trackName;
-    // int playCount;
-    // int albumCount;
     string command;
 
     while (cin >> command) {
@@ -90,13 +83,10 @@ int main() {
 
         } 
         else if (command == "ReverseTracks") {
+            
             string A;
             cin >> A;
-            Albumnode<string>* node = playlist.head;
-            while (node && node->name != A)
-                node = node->next;
-            if (node && node->tracks)
-                node->tracks->ReverseTrack();
+            playlist.ReverseTracks(A);
 
         }
          else if (command == "RemoveLastAlbum") {

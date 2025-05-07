@@ -20,7 +20,6 @@ public:
     Tracknode<M>* head;
     Tracklist() : head(nullptr) {}
     ~Tracklist();
-    void ReverseTrack();
 };
 
 template <class M>
@@ -53,6 +52,7 @@ public:
     void RemoveLastAlbum();
     void RemoveAlbumAt(int P);
     void ReverseAlbum();
+    void ReverseTracks(const M& A);
     void PrintAlbum() const;
     void PushFrontTrack(const M& T, int C, const M& A);
     void PushBackTrack(const M& T, int C, const M& A);

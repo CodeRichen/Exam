@@ -64,7 +64,7 @@ void Albumlist<M>::InsertAtAlbum(const M& A, int P) {
         temp = temp->next;
         i++;
     }
-    if (!temp->next && temp!=head) return; 
+    if (!temp->next && i<P-2) return; 
     Albumnode<M>* newAlbum = new Albumnode<M>(A);
     newAlbum->next = temp->next;
     temp->next = newAlbum;
@@ -150,7 +150,7 @@ void Albumlist<M>::InsertTrack(const M& T, int C, const M& A, int P) {
         temp = temp->next;
         i++;
     }
-    if (!temp->next && temp!= album->tracks->head) return; 
+    if (!temp->next & i<P-2) return; 
     Tracknode<M>* newTrack = new Tracknode<M>(const_cast<M&>(T), C);
     newTrack->next = temp->next;
     temp->next = newTrack;
@@ -201,7 +201,7 @@ void Albumlist<M>::RemoveAtTrack(const M& A, int P) {
         temp = temp->next; 
         i++;
     }
-    if (!temp->next && temp != album->tracks->head) return;
+    if (!temp->next && i<P-2) return;
     Tracknode<M>* toDelete = temp->next;
     temp->next = toDelete->next;
     delete toDelete;
@@ -237,7 +237,7 @@ void Albumlist<M>::Play() {
     Tracknode<M>* track = album->tracks->head;
     if (!track) return;
     cout << track->name << "\n";
-    track->playCount++;
+    // track->playCount++;
 }
 
 template <class M>
@@ -264,16 +264,20 @@ void Albumlist<M>::Next() {
 
 
 template <class M>
-void Tracklist<M>::ReverseTrack() {
+void Albumlist<M>::ReverseTracks(const M& A) {
+    Albumnode<M>* album = head;
+    while (album && album->name != A) album = album->next;
+
     Tracknode<M>* prev = nullptr;
-    Tracknode<M>* curr = head;
+    Tracknode<M>* curr = album->tracks->head;
+    Tracknode<M>* next = nullptr;
     while (curr) {
         Tracknode<M>* next = curr->next;
         curr->next = prev;
         prev = curr;
         curr = next;
     }
-    head = prev;
+    album->tracks->head = prev;
 }
 
 template <class M>
